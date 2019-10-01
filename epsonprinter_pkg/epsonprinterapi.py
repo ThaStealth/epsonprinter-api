@@ -36,6 +36,17 @@ class EpsonPrinterAPI(object):
             #_LOGGER.error("Unable to fetch level from data: " + str(e))
             return 0
 
+    def get_mac(self):
+        """Get the mac of the printer."""
+        try:
+            for tr in self.soup.find_all("tr", class_="item-last clearfix"):
+                mac = tr.find("td", class_="item-value")
+                
+                if mac != None:
+                    return mac.get_text()
+        except:
+            return None
+
     def update(self):
         try:
             """Just fetch the HTML page."""
